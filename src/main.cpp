@@ -9,6 +9,33 @@
 using namespace std;
 
 typedef std::vector<geometry_msgs::Point> Grid;
+struct visProp {
+    double length;
+    double width;
+    double height;
+    double incre;
+};
+
+Grid getGridSampling() {
+    double len = 40;
+    double wid = 40;
+    double hei = 1;
+    double incre = 1;
+
+    Grid grid;
+    for(double l=0;l<=len;l+=incre) {
+        for(double w=0;w<=wid;w+=incre) {
+            for(double h=0;h<=hei;h+=incre) {
+                geometry_msgs::Point p;
+                p.x = l;
+                p.y = w;
+                p.z = h;
+                grid.push_back(p);
+            }
+        }
+    }
+    return grid;
+}
 
 int main(int argc, char **argv) {
     float frequency = 100;
@@ -32,6 +59,9 @@ int main(int argc, char **argv) {
     Visualize vis(n, "map", nDrones, obstacleConfigPath);
     vis.addToPaths(trajectories);
 
+    // get grid sampling
+    Grid grid = getGridSampling();
+    vis.addToGrid(grid);
 
     while(ros::ok()) {
         vis.draw();
@@ -40,7 +70,6 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-Grid getGridSampling() {}
 
 Grid getSampling(Grid pathNodes) {}
 
