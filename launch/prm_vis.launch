@@ -3,13 +3,13 @@
     <arg name="nDrones" default="5" />
     <arg name="obstacleConfig" default="obstacles.yaml"/>
 
-    <arg name="data_dir" default="$(find prim_vis)/launch/data/"/>
+    <arg name="data_dir" default="$(find prm_vis)/launch/data/"/>
 
     <env name="ROSCONSOLE_CONFIG_FILE"
-       value="$(find prim_vis)/launch/custom_rosconsole.conf"/>
+       value="$(find prm_vis)/launch/custom_rosconsole.conf"/>
   
-    <node name="prim_vis" pkg="prim_vis" type="prim_vis" output="screen">
-        <param name="trajDir" value="$(arg traj_dir)"/>
+    <node name="prm_vis" pkg="prm_vis" type="prm_vis" output="screen">
+        <param name="data_dir" value="$(arg data_dir)"/>
         <param name="nDrones" value="$(arg nDrones)"/>
         <param name="obstacleFileName" value="$(arg obstacleConfig)"/>
     </node>
@@ -18,7 +18,7 @@
         pkg="rviz"
         type="rviz"
         output="screen"
-        args="-d $(find prim_vis)/launch/simulation.rviz"
+        args="-d $(find prm_vis)/launch/simulation.rviz"
         />
   />
 
