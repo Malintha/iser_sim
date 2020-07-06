@@ -2,7 +2,7 @@
 <launch>
     <arg name="nDrones" default="5" />
     <arg name="obstacleConfig" default="obstacles.yaml"/>
-
+    <arg name="startsConfigName" default="starts.txt"/>
     <arg name="data_dir" default="$(find prm_vis)/launch/data/"/>
 
     <env name="ROSCONSOLE_CONFIG_FILE"
@@ -12,6 +12,8 @@
         <param name="data_dir" value="$(arg data_dir)"/>
         <param name="nDrones" value="$(arg nDrones)"/>
         <param name="obstacleFileName" value="$(arg obstacleConfig)"/>
+        <param name="startsConfigName" value="$(arg startsConfigName)"/>
+
     </node>
 
       <node name="rviz"
