@@ -55,9 +55,9 @@ return positions;
 }
 
 std::vector<Grid> getAgentSchedules(int nAgents, std::string dataDir) {
-    stringstream ss;
     std::vector<Grid> schedule;
     for(int i=1; i<=nAgents; i++) {
+        stringstream ss;
         ss << dataDir << "agent_" << std::to_string(i)<<".txt";
         std::ifstream infile(ss.str());
         int x, y, z;
@@ -68,11 +68,26 @@ std::vector<Grid> getAgentSchedules(int nAgents, std::string dataDir) {
             p.y = y;
             p.z = z;
             path.push_back(p);
-            std::cout<<"point: "<<x<<" "<<y<<" "<<z<<std::endl;
         }
     schedule.push_back(path);
     }
     return schedule;
+}
+
+Grid getTopology(std::string dataDir) {
+    Grid topology;
+    stringstream ss;
+    ss << dataDir << "topology.txt";
+    std::ifstream infile(ss.str());
+    int x, y, z, cls;
+    while(infile >> x >> y >> z >> cls) {
+        geometry_msgs::Point p;
+        p.x = x;
+        p.y = y;
+        p.z = z;
+        topology.push_back(p);
+    }
+    return topology;
 }
 
 int main(int argc, char **argv) {
@@ -97,7 +112,6 @@ int main(int argc, char **argv) {
     Grid positions = getStartGoalPositions(startsFilePath);
     std::vector<Grid> schedule = getAgentSchedules(nAgents, dataDir);
     ROS_ERROR_STREAM("schedule length: "<<schedule.size());
-
     vector<Trajectory> trajectories = simutils::loadTrajectoriesFromFile(nDrones, n, dataDir);
 
     stringstream ss;
@@ -105,6 +119,9 @@ int main(int argc, char **argv) {
     string obstacleConfigPath = ss.str();
     Visualize vis(n, "map", nDrones, obstacleConfigPath);
     vis.addToPaths(trajectories);
+    Grid topology = getTopology(dataDir);
+    vis.addToTopo(topology);
+    vis.addAgentPaths(schedule);
 
     // get grid sampling
     Grid grid = getGridSampling();
