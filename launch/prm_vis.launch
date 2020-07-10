@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="nDrones" default="4" />
+    <arg name="nDrones" default="10" />
     <arg name="obstacleConfig" default="obstacles.yaml"/>
     <arg name="startsConfigName" default="starts.txt"/>
     <arg name="data_dir" default="$(find prm_vis)/launch/data/"/>
