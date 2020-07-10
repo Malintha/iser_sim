@@ -59,7 +59,7 @@ Visualization Manager:
       Marker Topic: /prm_vis/visualization_marker/obs
       Name: Marker
       Namespaces:
-        {}
+        "": true
       Queue Size: 100
       Value: true
     - Alpha: 1
@@ -142,7 +142,7 @@ Visualization Manager:
       Marker Topic: /prm_vis/visualization_marker/traj
       Name: Marker
       Namespaces:
-        {}
+        "": true
       Queue Size: 100
       Value: true
     - Class: rviz/Axes
@@ -172,7 +172,7 @@ Visualization Manager:
   Global Options:
     Background Color: 238; 238; 236
     Default Light: true
-    Fixed Frame: map
+    Fixed Frame: world
     Frame Rate: 30
   Name: root
   Tools:

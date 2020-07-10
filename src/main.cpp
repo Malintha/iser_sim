@@ -106,20 +106,23 @@ int main(int argc, char **argv) {
 
     ROS_DEBUG_STREAM("obstacleConfigFileName: " << obstacleConfigFileName);
     ROS_DEBUG_STREAM("dataDir: " <<dataDir);
-    stringstream ss_;
-    ss_ << dataDir << startsConfigName;
-    string startsFilePath = ss_.str();
+    stringstream ss, ss0, ss1;
+    ss0 << dataDir << startsConfigName;
+    string startsFilePath = ss0.str();
+    ss1 << dataDir << "trajectories/";
     Grid positions = getStartGoalPositions(startsFilePath);
     std::vector<Grid> schedule = getAgentSchedules(nAgents, dataDir);
     ROS_ERROR_STREAM("schedule length: "<<schedule.size());
-    vector<Trajectory> trajectories = simutils::loadTrajectoriesFromFile(nDrones, n, dataDir);
-
-    stringstream ss;
+    
+    vector<Trajectory> trajectories = simutils::loadTrajectoriesFromFile(nDrones, n, ss1.str());
+    std::cout<<trajectories[0].pos.size()<<std::endl;
     ss << dataDir << obstacleConfigFileName;
     string obstacleConfigPath = ss.str();
-    Visualize vis(n, "map", nDrones, obstacleConfigPath);
+    Visualize vis(n, "world", nDrones, obstacleConfigPath);
     vis.addToPaths(trajectories);
     Grid topology = getTopology(dataDir);
+    std::cout<<"here"<<std::endl;
+
     vis.addToTopo(topology);
     vis.addAgentPaths(schedule);
 
